@@ -20,8 +20,8 @@ public class ProductService {
         return products;
     }
 
-    public Product saveProduct(Product product){
-        productRepository.save(product);
+    public List<Product> saveProduct(List<Product> product){
+        productRepository.saveAll(product);
         return product;
     }
 }
