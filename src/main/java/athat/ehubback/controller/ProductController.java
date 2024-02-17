@@ -1,5 +1,7 @@
 package athat.ehubback.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +15,9 @@ public class ProductController {
     @Autowired
     private ProductService productService ;
 
-    @GetMapping("/api/productlist")
-    public Product productlist() {
-        Product product = productService.getProduct();
-        return product;
+    @GetMapping("/api/products")
+    public List<Product> getProducts() {
+        List<Product> products = productService.getProducts();
+        return products;
     }
 }
