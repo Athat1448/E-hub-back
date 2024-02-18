@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class ProductDto {
+public class LineProductDto {
 
   private List<Product> data;
 

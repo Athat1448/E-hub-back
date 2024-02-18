@@ -19,7 +19,10 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long productId;
+
+    @NonNull
+    private String id;
 
     @NonNull
     private String[] imageUrls;

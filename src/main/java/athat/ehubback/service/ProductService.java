@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import athat.ehubback.dto.ProductDto;
+import athat.ehubback.dto.LineProductDto;
 import athat.ehubback.model.Product;
 import athat.ehubback.repository.ProductRepository;
 
@@ -27,7 +27,7 @@ public class ProductService {
         return products;
     }
 
-    public List<Product> saveProductsFromLine(){
+    public List<Product> updateProductsFromLine(){
         List<Product> products = getProductsFromLine();
         productRepository.saveAll(products);
         return products;
@@ -38,12 +38,12 @@ public class ProductService {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-API-KEY", "YTE3ZDM1NTUtZDM2OS00MDBmLTlkNjMtNTUxY2U1Y2I2YmUx");
+        headers.set("X-API-KEY", "");// API key
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-        ResponseEntity<ProductDto> response = restTemplate.exchange(uri, HttpMethod.GET, entity, ProductDto.class);
-        ProductDto productDto = response.getBody();
+        ResponseEntity<LineProductDto> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LineProductDto.class);
+        LineProductDto productDto = response.getBody();
         List<Product> products = productDto.getData();
         return products;
     }
