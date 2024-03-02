@@ -3,6 +3,8 @@ package athat.ehubback.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,20 +25,20 @@ public class Variants {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("lineid")
+    private String lineId;
+
+    @JsonProperty("lazadaid")
+    private String lazadaId;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private String barcode;
-
-    private String sku;
-
     private BigDecimal price;
-
-    private BigDecimal discountedPrice;
 
     private BigDecimal weight;
 
-    @OneToMany(mappedBy = "variant")
+    @OneToMany(mappedBy = "variants")
     private List<VariantOption> options;
 }

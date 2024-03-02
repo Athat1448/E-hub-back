@@ -15,14 +15,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VariantOption {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "variant_id")
-    private Variants variant;
+    @JoinColumn(name = "variants_id")
+    private Variants variants;
 
     private String name;
 

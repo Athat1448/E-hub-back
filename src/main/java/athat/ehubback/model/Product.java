@@ -2,11 +2,14 @@ package athat.ehubback.model;
 
 import java.util.List;
 
-import io.micrometer.common.lang.NonNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,16 +27,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
+    @JsonProperty("lineid")
     private String lineId;
 
-    @NonNull
+    @JsonProperty("lazadaid")
     private String lazadaId;
 
-    @NonNull
     private String[] imageUrls;
 
-    @NonNull
     private String name;
 
     private String description;
@@ -42,6 +43,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Variants> variants;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
     
 }
 
