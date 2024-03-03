@@ -1,7 +1,7 @@
 package athat.ehubback.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +27,7 @@ public class StoreController {
         private User user;
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     public Store create(@RequestBody StoreRequestBody storeRequest)throws ResponseStatusException{
         Store Store = storeService.create(storeRequest.getName(), storeRequest.getLineApiKey(), storeRequest.getLazadaApiKey(), storeRequest.getUser());
         return Store;

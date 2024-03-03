@@ -2,6 +2,7 @@ package athat.ehubback.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,14 +16,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtService jwtService;
+
     @Autowired(required=true)
     private BCryptPasswordEncoder passwordEncoder;
 
-    public String login(String username, String password) throws ResponseStatusException {
+    public ResponseEntity<String> login(String username, String password) throws ResponseStatusException {
         User user = userRepository.findByUsername(username);
         
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return "success";
+            String token = jwtService.generateToken(username);
+            return ResponseEntity.ok("{\"token\": \"" + token + "\"}");
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }

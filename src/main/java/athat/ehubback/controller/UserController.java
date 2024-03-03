@@ -1,6 +1,7 @@
 package athat.ehubback.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) throws ResponseStatusException{
-        String message = userService.login(user.getUsername(), user.getPassword());
+    public ResponseEntity<String> login(@RequestBody User user) throws ResponseStatusException{
+        ResponseEntity<String> message = userService.login(user.getUsername(), user.getPassword());
         return message;
     }
 
