@@ -9,21 +9,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name = "variant_options")
 @Getter
 @Setter
-public class VariantOption {
+@ToString
+@Table(name = "lineOrderItem")
+public class LineOrderItem {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "variants_id")
-    private Variants variants;
-
+    private String barcode;
+    private double discountedPrice;
+    private String imageURL;
     private String name;
+    private double price;
+    private long productId;
+    private int quantity;
+    private String sku;
+    private long variantId;
+    private double weight;
 
-    private String value;
+    @ManyToOne
+    @JoinColumn(name = "line_order_id")
+    private LineOrder lineOrder;
 }

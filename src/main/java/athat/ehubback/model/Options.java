@@ -1,15 +1,11 @@
 package athat.ehubback.model;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,24 +13,18 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "variants")
-public class Variants {
+@Table(name = "options")
+public class Options {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String lineId;
+    private String name;
 
-    private String lazadaId;
+    private String value;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    private BigDecimal price;
-
-    private BigDecimal weight;
-
-    @OneToMany(mappedBy = "variants")
-    private List<Options> options;
+    @JoinColumn(name = "variants_id")
+    private Variants variants;
 }
