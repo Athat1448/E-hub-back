@@ -60,26 +60,28 @@ public class StoreService {
         return newToken;
     }
 
-    public Store addUserToStore(String token, String storeName) throws ResponseStatusException {
-        String username = jwtService.extractUsername(token);
-        User user = userRepository.findByUsername(username);
-        Store store = storeRepository.findByName(storeName);
+    public Store addUserToStore(String token, String name) throws ResponseStatusException {
+        String ownername = jwtService.extractUsername(token);
+        User owner = userRepository.findByUsername(ownername);
+        Store store = owner.getStore();
+
+        User employee = userRepository.findByUsername(name);
         if(store == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Store not found");
         }
-        if(user == null){
+        if(employee == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
-        if(user.getStore() != null){
+        if(employee.getStore() != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already have store");
         }
         List<User> userList = store.getUser();
-        userList.add(user);
+        userList.add(employee);
         store.setUser(userList);
         storeRepository.save(store);
-        user.setStore(store);
-        user.setRole(Role.EMPLOYEE);
-        userRepository.save(user);
+        employee.setStore(store);
+        employee.setRole(Role.EMPLOYEE);
+        userRepository.save(employee);
         return store;
     }
 

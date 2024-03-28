@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import athat.ehubback.model.Store;
+import athat.ehubback.model.User;
 import athat.ehubback.service.StoreService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -29,17 +30,18 @@ public class StoreController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> create(@RequestBody StoreRequestBody storeRequest, HttpServletRequest request)throws ResponseStatusException{
+    public String create(@RequestBody StoreRequestBody storeRequest, HttpServletRequest request)throws ResponseStatusException{
         String authHeader = request.getHeader("Authorization");
         String token = authHeader.substring(7);
-        storeService.create(storeRequest.getName(), storeRequest.getLineApiKey(), storeRequest.getLazadaApiKey(), token);
-        return ResponseEntity.status(202).body("Store " + storeRequest.getName() + " have create");
+        String newtoken = storeService.create(storeRequest.getName(), storeRequest.getLineApiKey(), storeRequest.getLazadaApiKey(), token);
+        return newtoken;
     }
 
     @PostMapping("/adduser")
-    public ResponseEntity<Object> join(HttpServletRequest request, @RequestBody String name)throws ResponseStatusException{
+    public ResponseEntity<Object> join(HttpServletRequest request, @RequestBody User user)throws ResponseStatusException{
         String authHeader = request.getHeader("Authorization");
         String token = authHeader.substring(7);
+        String name = user.getUsername();
         Store store = storeService.addUserToStore(token, name);
         return ResponseEntity.status(202).body("Join " + store.getName() + "'s store");
     }
